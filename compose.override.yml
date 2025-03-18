@@ -1,0 +1,22 @@
+services:
+  # Exemple : Surcharger le service "web" pour le développement
+  web:
+    volumes:
+      - ./logs/nginx:/var/log/nginx 
+
+  # Exemple : Ajouter un service de développement supplémentaire (ex : phpMyAdmin)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db 
+      PMA_PORT: 5432
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+  db:
+    volumes:
+      - db_data:/var/lib/postgresql/data  # Persister les données de la base de données par exemples ?
+
+volumes:
+  db_data:
