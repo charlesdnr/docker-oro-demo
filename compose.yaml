@@ -10,6 +10,8 @@ services:
         condition: service_started
       cron:
         condition: service_started
+    networks:
+      - backend
 
   web:
     image: $ORO_IMAGE:$ORO_IMAGE_TAG
@@ -28,9 +30,10 @@ services:
       ws:
         condition: service_started
     networks:
-      default:
+      frontend:
         aliases:
           - ${ORO_APP_DOMAIN}
+      backend:
     volumes:
       - cache:/var/www/oro/var/cache:ro
       - public:/var/www/oro/public
@@ -45,6 +48,14 @@ volumes:
   etc_nginx: {}
   run_php_fpm: {}
   public: {}
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+  database:
+    driver: bridge
 
 include:
   - ./docker-compose/docker-compose.db.yml

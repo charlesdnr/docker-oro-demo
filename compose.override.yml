@@ -1,10 +1,10 @@
 services:
-  # Exemple : Surcharger le service "web" pour le développement
+  # Surcharge du service "web" pour le développement
   web:
     volumes:
       - ./logs/nginx:/var/log/nginx 
 
-  # Exemple : Ajouter un service de développement supplémentaire (ex : phpMyAdmin)
+  # PhpMyAdmin avec réseau approprié
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
@@ -14,9 +14,23 @@ services:
       - "8081:80"
     depends_on:
       - db
+    networks:
+      - frontend
+      - database
+      
+  # Ajout de réseau pour la base de données
   db:
     volumes:
-      - db_data:/var/lib/postgresql/data  # Persister les données de la base de données par exemples ?
+      - db_data:/var/lib/postgresql/data
 
 volumes:
-  db_data:
+  db_data: {}
+  prometheus_data: {}
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+  database:
+    external: true

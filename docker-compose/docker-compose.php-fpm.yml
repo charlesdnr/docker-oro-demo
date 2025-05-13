@@ -23,3 +23,6 @@ services:
       - public_storage:/var/www/oro/public/media
       - private_storage:/var/www/oro/var/data
       - run_php_fpm:/run/php-fpm
+    networks:
+      - backend
+      - database

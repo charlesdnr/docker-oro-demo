@@ -7,3 +7,6 @@ services:
       MH_STORAGE: maildir
       MH_MAILDIR_PATH: /home/mailhog/maildir
     restart: unless-stopped
+    networks:
+      - frontend
+      - backend

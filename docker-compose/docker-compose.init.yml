@@ -7,3 +7,5 @@ services:
       - etc_nginx:/etc/nginx
       - run_php_fpm:/run/php-fpm
       - public:/var/www/oro/public
+    networks:
+      - backend
